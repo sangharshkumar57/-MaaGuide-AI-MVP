@@ -14,7 +14,7 @@
 
 ### 🔗 Live Deployment & Demo Links
 * **Live Streamlit App:** [https://maaguide.streamlit.app](https://maaguide.streamlit.app)
-* **YouTube Demo Backup:** [https://youtu.be/89M6kR_vyvM]
+* **YouTube Demo Backup:** https://youtu.be/89M6kR_vyvM
 * **Target User Segment:** Urban Working Mothers (Pregnancy Trimesters 1–3 & Postpartum Return-to-Work)
 * **Primary Use Case:** Delivering a zero-mat, clinically vetted 180-second seated chair yoga and breathing routine at the office desk by synthesizing Ayurvedic *Sukshma Vyayama* with modern OB-GYN safety guardrails.
 
