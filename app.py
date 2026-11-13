@@ -9,33 +9,13 @@ from array import array
 
 st.set_page_config(
     page_title="MaaGuide AI · 3-Min Desk Yoga",
-    page_icon="🧘‍♀️",
+    page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 st.markdown("""
     <style>
-    .brand-header {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding-bottom: 12px;
-        border-bottom: 2px solid #E5E7EB;
-        margin-bottom: 16px;
-    }
-    .brand-icon {
-        background-color: #0F5247;
-        color: white;
-        font-weight: 700;
-        font-size: 22px;
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
     .stButton>button[kind="primary"] {
         background-color: #0F5247;
         color: white;
@@ -47,7 +27,14 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Ultra-Fast 432Hz Audio Generator (Loads in <0.05 seconds, zero CPU freeze)
+# Helper to find uploaded logo file in GitHub repo
+def get_logo_path():
+    for fname in ["logo.jpg", "logo.png", "logo.jpeg", "image_aadf7d.jpg"]:
+        if os.path.exists(fname):
+            return fname
+    return None
+
+# Ultra-Fast 432Hz Audio Generator (Loads in <0.05 seconds)
 @st.cache_data
 def get_fast_432hz_wav():
     sample_rate = 8000
@@ -81,8 +68,12 @@ if "saved_workspace" not in st.session_state:
 if "saved_discomfort" not in st.session_state:
     st.session_state.saved_discomfort = st.session_state.discomfort_input
 
+logo_file = get_logo_path()
+
 # ---------------- LEFT SIDEBAR ----------------
 with st.sidebar:
+    if logo_file:
+        st.image(logo_file, width=180)
     st.markdown("### About MaaGuide AI")
     st.write(
         "MaaGuide AI generates clinically safe **3-minute seated desk yoga and breathing routines** "
@@ -104,20 +95,22 @@ with st.sidebar:
     st.markdown("---")
     st.caption("🟢 AI mode: **live (Fast Synthesis Engine)**")
 
-# ---------------- TOP HEADER ----------------
-st.markdown("""
-    <div class="brand-header">
-        <div class="brand-icon">🧘‍♀️</div>
-        <div>
-            <div style="font-size:22px; font-weight:700; color:#111827;">MaaGuide AI · 3-Minute Desk Yoga</div>
-            <div style="font-size:14px; color:#4B5563;">
-                Stressed or stiff between office meetings? Get a zero-mat, clinically vetted 180-second chair yoga routine right at your desk.
-            </div>
-        </div>
-    </div>
-""", unsafe_allow_html=True)
+# ---------------- TOP HEADER WITH LOGO ----------------
+h_col1, h_col2 = st.columns([1.2, 6], vertical_alignment="center")
+with h_col1:
+    if logo_file:
+        st.image(logo_file, use_container_width=True)
+    else:
+        st.markdown("<h2 style='color:#0F5247; margin:0;'>🌿 MaaGuide AI</h2>", unsafe_allow_html=True)
+with h_col2:
+    st.markdown(
+        "<div style='font-size:24px; font-weight:700; color:#0F5247;'>MaaGuide AI · 3-Minute Desk Yoga</div>"
+        "<div style='font-size:14px; color:#4B5563;'>Stressed or stiff between office meetings? Get a zero-mat, clinically vetted 180-second chair yoga routine right at your desk.</div>",
+        unsafe_allow_html=True
+    )
+st.divider()
 
-# Fast Synthesis Function (Never hangs or times out)
+# Fast Synthesis Function
 def generate_desk_yoga(stage, workspace, discomfort, lang):
     api_key = st.secrets.get("GEMINI_API_KEY", os.environ.get("GEMINI_API_KEY", ""))
     prompt = f"""
@@ -156,7 +149,6 @@ def generate_desk_yoga(stage, workspace, discomfort, lang):
         except Exception:
             pass
 
-    # Instant Sub-Second Clinical Synthesis (If API is slow or rate-limited)
     d_low = discomfort.lower()
     if "ankle" in d_low or "feet" in d_low or "rib" in d_low or "swollen" in d_low:
         m2 = "**Minute 2 (Discreet Under-Desk Ankle Pumps / *Goolf Naman*):** Keep your upper torso still. Extend legs slightly under your desk, pull toes up toward your shins for 3 seconds, then point them down for 3 seconds (10 slow reps) to flush out lower-limb fluid."
