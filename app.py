@@ -80,7 +80,7 @@ if generate_btn:
                 (A polite, 2-sentence translated message she can copy-paste to her parents/in-laws on WhatsApp explaining the safe middle ground)
                 """
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.8-flash",
                     contents=prompt
                 )
                 
