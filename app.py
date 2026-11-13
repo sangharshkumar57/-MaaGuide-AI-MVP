@@ -27,9 +27,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Helper to find uploaded logo file in GitHub repo
+# Helper to find uploaded Logo.png (handles Capital 'L' first)
 def get_logo_path():
-    for fname in ["logo.jpg", "logo.png", "logo.jpeg", "image_aadf7d.jpg"]:
+    for fname in ["Logo.png", "logo.png", "Logo.jpg", "logo.jpg", "LOGO.PNG", "Logo.jpeg"]:
         if os.path.exists(fname):
             return fname
     return None
@@ -95,7 +95,7 @@ with st.sidebar:
     st.markdown("---")
     st.caption("🟢 AI mode: **live (Fast Synthesis Engine)**")
 
-# ---------------- TOP HEADER WITH LOGO ----------------
+# ---------------- TOP HEADER WITH LOGO.PNG ----------------
 h_col1, h_col2 = st.columns([1.2, 6], vertical_alignment="center")
 with h_col1:
     if logo_file:
